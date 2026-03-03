@@ -1,13 +1,18 @@
-async function destroyItems() {
-  return Promise.resolve(4);
+let someOuterScopeVariable : string;
+
+async function generatorFunction() {
+  return {
+    inner: 'foo',
+    outer: 'bar',
+  };
 }
 
-
 async function myFunction() {
-  let nItemsDestroyed: number;
-  nItemsDestroyed = await destroyItems();
-  nItemsDestroyed += await destroyItems();
-  console.info(`destroyItem: ${nItemsDestroyed} items destroyed.`);
+  let innerScope: string;
+  // destructure assignment to existing variables
+  ({inner: innerScope, outer: someOuterScopeVariable} = await generatorFunction());
+
+  console.info(`${innerScope}, ${someOuterScopeVariable}`);
 }
 
 myFunction();
